@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-  height: 8%;
+  height: 60px;
   width: 100%;
   display: flex;
   flex-flow: row nowrap;

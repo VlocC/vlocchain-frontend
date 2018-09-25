@@ -21,12 +21,12 @@ class VideoPage extends Component {
       <HeaderContainer>
         <LogoText>VlocC</LogoText>
         <ButtonContainer>
-          <NavLink to='/' exact activeStyle={activeStyle} >
+          <NavLink to='/' exact activeStyle={activeStyle} style={{height : '100%'}}>
             <Button>
               Browse
             </Button>
           </NavLink>
-          <NavLink to='/video' activeStyle={activeStyle} >
+          <NavLink to='/video' activeStyle={activeStyle} style={{height : '100%'}}>
             <Button>
               Videos
             </Button>
