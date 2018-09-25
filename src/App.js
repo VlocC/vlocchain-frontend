@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { VideoPage } from './pages';
 
 class App extends Component {
   state = { toggle: true };
@@ -9,22 +10,7 @@ class App extends Component {
     const { toggle } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>
-            This app is built with <br />React ⚛️ + Parcel 📦!
-          </h1>
-          <img
-            src={logo}
-            onClick={this.toggleToggle}
-            className={'App-logo ' + (toggle && 'Logo-spin')}
-            alt="logo"
-          />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <A href="https://reactjs.org/">Learn React</A>
-          <A href="https://parceljs.org/getting_started.html">Learn Parcel</A>
-        </header>
+        <VideoPage></VideoPage>
       </div>
     );
   }

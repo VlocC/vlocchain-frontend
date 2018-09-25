@@ -5,7 +5,9 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts-parcel": "0.0.24"
+    "react-router-dom": "^4.3.1",
+    "react-scripts-parcel": "0.0.24",
+    "styled-components": "^3.4.9"
   },
   "scripts": {
     "start": "react-scripts-parcel start",
