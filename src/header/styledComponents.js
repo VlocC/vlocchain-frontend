@@ -29,7 +29,7 @@ export const Button = styled.button`
   height: 100%;
   border: none;
   outline: none;
-  background: inherit;
+  background: ${props => props.isActive ? 'red' : 'inherit'};
   color: white;
   font-weight: bold;
   font-size: 20px;
