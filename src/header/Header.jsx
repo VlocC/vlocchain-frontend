@@ -31,6 +31,11 @@ class VideoPage extends Component {
               Videos
             </Button>
           </NavLink>
+          <NavLink to='/upload' activeStyle={activeStyle} style={{height : '100%'}}>
+            <Button>
+              Upload
+            </Button>
+          </NavLink>
           <Button>Setting</Button>
         </ButtonContainer>
       </HeaderContainer>
