@@ -8,7 +8,7 @@ import {
 } from './styledComponents.js';
 
 const activeStyle = {
-  'backgroundColor': 'red'
+  'backgroundColor': 'navy'
 }
 
 class VideoPage extends Component {
