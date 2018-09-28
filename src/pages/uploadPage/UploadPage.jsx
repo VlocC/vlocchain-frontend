@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import {
   Title,
-  UploadPageContainer
+  UploadPageContainer,
+  ThumbnailImg,
+  ThumbnailDiv
 } from './styledComponents.js';
-import FileInput from './FileInput';
+import ThumbnailInput from './ThumbnailInput';
 
 class UploadPage extends Component {
   constructor(props) {
     super(props);
+
+    this.state ={
+      files: []
+    }
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
     this.connection = new WebSocket('ws://127.0.0.1:1337');
@@ -34,11 +40,12 @@ class UploadPage extends Component {
   }
 
   render() {
+    console.warn(this.state)
     return (
       <UploadPageContainer>
-        <Title>Hey this is the upload page</Title>
-        <button onClick={this.sendMessage}>CLICK HERE TO SEND A MESSAGE</button>
-        <FileInput />
+        <Title placeholder="Put your title here"/>
+        <ThumbnailInput callBackSetState={this.setState.bind(this)}/>
+
       </UploadPageContainer>
     );
   }
