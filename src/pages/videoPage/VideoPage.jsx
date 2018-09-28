@@ -4,8 +4,11 @@ import {
   Title,
   PageContainer,
   ThumbnailImg,
+  ThumbnailDiv,
   CreatorDiv,
-  CreatorImg
+  CreatorImg,
+  SubContainer,
+  DescriptionDiv
 } from './styledComponents.js';
 
 class VideoPage extends Component {
@@ -26,16 +29,26 @@ class VideoPage extends Component {
   }
 
   render() {
+    const timeCreated = new Date(this.state.createdAt)
     console.warn(this.state);
     return this.state.infoLoading ? <div>Loading</div> : (
       <PageContainer>
         <Title>{this.state.title}</Title>
-        <ThumbnailImg src={this.state.thumbnailUrl} />
-        <span>created by:</span>
-        <CreatorDiv>
-          <CreatorImg src={this.state.creator.picture} />
-          <h2>{this.state.creator.name}</h2>
-        </CreatorDiv>
+        <ThumbnailDiv>
+          <ThumbnailImg src={this.state.thumbnailUrl} />
+        </ThumbnailDiv>
+        <SubContainer>
+          <CreatorDiv style={{width: '100%'}}>
+            <CreatorDiv>
+              <CreatorImg src={this.state.creator.picture} />
+              <h2>{this.state.creator.name}</h2>
+            </CreatorDiv>
+            <h3>{`${timeCreated.getMonth()} ${timeCreated.getDate()}, ${timeCreated.getFullYear()}`}</h3>
+          </CreatorDiv>
+          <DescriptionDiv>
+            {`${this.state.description}`}
+          </DescriptionDiv>
+        </SubContainer>
       </PageContainer>
     )
   }

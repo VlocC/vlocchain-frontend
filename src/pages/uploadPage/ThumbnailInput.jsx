@@ -4,9 +4,11 @@ import {
   DropzoneContainer,
   FileInputContainer,
   ThumbnailText,
+} from './styledComponents';
+import {
   ThumbnailImg,
   ThumbnailDiv
-} from './styledComponents';
+} from '../videoPage/styledComponents';
 
 const DropzoneStyle ={
   height:'100%',

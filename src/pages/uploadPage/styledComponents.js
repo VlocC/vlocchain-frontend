@@ -3,11 +3,20 @@ import styled from 'styled-components';
 export const Title = styled.input`
   font-size: 70px;
   width: auto;
-  color: blue;
+  color: navy;
   border: none;
   border-bottom: grey solid 1px;
   outline: none;
   text-align: center;
+`;
+
+export const DescriptionDiv = styled.textarea`
+  font-size: 18px;
+  width: 100%;
+  height: 500px;
+  color: navy;
+  outline: none;
+  text-align: left;
 `;
 
 export const UploadPageContainer = styled.div`
@@ -32,21 +41,12 @@ export const DropzoneContainer = styled.div`
   }
 `;
 
-export const ThumbnailImg = styled.img`
-  max-width: 600px;
-  max-height: 1080px;
-`;
-
-export const ThumbnailDiv = styled.div`
-  margin-top: 30px;
-  height: 600px;
-  width: 1080px;
-  background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const ThumbnailText = styled.div`
   color: white;
+`;
+
+export const ConfirmButton = styled.button`
+  border: navy solid 4px;
+  border-radius: 8px;
+  padding: 20px 10px;
 `;
