@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Dropzone from 'react-dropzone'
 import {
   Title,
   PageContainer,

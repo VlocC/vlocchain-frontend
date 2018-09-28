@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-import { Title } from './styledComponents.js';
+import {
+  Title,
+  UploadPageContainer
+} from './styledComponents.js';
+import FileInput from './FileInput';
 
 class UploadPage extends Component {
   constructor(props) {
@@ -31,10 +35,11 @@ class UploadPage extends Component {
 
   render() {
     return (
-      <div>
+      <UploadPageContainer>
         <Title>Hey this is the upload page</Title>
         <button onClick={this.sendMessage}>CLICK HERE TO SEND A MESSAGE</button>
-      </div>
+        <FileInput />
+      </UploadPageContainer>
     );
   }
 }
