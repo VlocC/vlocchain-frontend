@@ -35,6 +35,19 @@ class UploadPage extends Component {
 
   handleConfirmUpload = () => {
     console.warn('confirmed')
+    const {title, description} = this.state;
+    const requestOptions = {
+      body: `title=${title}&creatorId=random&description=${description}&duration= 1:34&thumbnailUrl=https://cdn.gamerant.com/wp-content/uploads/pokemon-go-eevee-evolve-espeon-umbreon-guide.jpg.optimal.jpg&access_token=${localStorage.getItem('VLOCC_TOKEN')}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST"
+    };
+
+    fetch(`http://0.0.0.0:9000/videos`, requestOptions)
+    .then(res => res.json())
+    .then(response => window.location.replace(window.location.origin + '/videos/' + response.id))
+    .catch(error => console.error('Error:', error));
   }
 
   handleOnInputChange = (event) => {
