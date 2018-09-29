@@ -3,7 +3,8 @@ import {
   FormDiv,
   FieldDiv,
   InputField,
-  InputText
+  InputText,
+  Footer
 } from './styledComponents';
 
 class Form extends Component {
@@ -23,9 +24,10 @@ class Form extends Component {
           </FieldDiv>
           <div className="form-group row h-20 justify-content-center">
             <div className="col-sm-10">
-              <input onClick={this.props.handleOnCreateAccount} className="center btn btn-outline-light" type="submit" name="Sign In" value="Sign In"></input>
+              <input onClick={this.props.handleOnSignIn} className="center btn btn-outline-light" type="submit" name="Sign In" value="Sign In"></input>
             </div>
           </div>
+          <Footer onClick={this.props.toggleIsCreate}>Don't have an account? <b>Then create one!</b></Footer>
       </FormDiv>
     )
   }

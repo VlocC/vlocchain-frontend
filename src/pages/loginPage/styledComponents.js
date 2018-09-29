@@ -76,3 +76,9 @@ export const InputText = styled.div`
   color: white;
   text-align: center;
 `;
+
+export const Footer = styled.div`
+  color: white;
+  text-align:center;
+  cursor: pointer;
+`;
