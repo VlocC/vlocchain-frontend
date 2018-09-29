@@ -1,28 +1,8 @@
-body {
-  height:100vh;
-  width:100%;
-  background-attachment: fixed;
-  background-image: url("./bg.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-	margin-right: auto;
-	width: 50%;
-}
-
 .info {
 	margin-top: 5vh;
 }
 
 #labels {
   color: white;
-	margin-right: 10vw;
 	text-align: center;
 }

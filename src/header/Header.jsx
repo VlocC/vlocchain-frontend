@@ -26,9 +26,9 @@ class VideoPage extends Component {
               Browse
             </Button>
           </NavLink>
-          <NavLink to='/video' activeStyle={activeStyle} style={{height : '100%'}}>
+          <NavLink to='/login' activeStyle={activeStyle} style={{height : '100%'}}>
             <Button>
-              Videos
+              Login
             </Button>
           </NavLink>
           <NavLink to='/upload' activeStyle={activeStyle} style={{height : '100%'}}>

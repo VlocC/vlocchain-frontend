@@ -9,10 +9,14 @@ import {
 } from './pages';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
+    console.log(this.props);
     return (
       <div>
-        <Header />
+        {window.location.pathname === '/login' ? null : <Header />}
         <Route path='/login' component={LoginPage}/>
         <Switch>
           <Route path='/video/:videoId' component={VideoPage}/>
