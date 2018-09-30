@@ -4,6 +4,7 @@ import {
   FieldDiv,
   InputField,
   InputText,
+  CenterDiv,
   Footer
 } from './styledComponents';
 
@@ -14,6 +15,7 @@ class CreateAccount extends Component {
   render () {
     return (
       <FormDiv>
+        <CenterDiv>
           <FieldDiv>
               <InputText>Email</InputText>
               <InputField onChange={this.props.handleOnChange} type="text" name="username" placeholder="john.doe@gmail.com" />
@@ -30,6 +32,7 @@ class CreateAccount extends Component {
               <InputText>Password</InputText>
               <InputField onChange={this.props.handleOnChange} type="text" name="password" placeholder="At least 6 characters" />
           </FieldDiv>
+        </CenterDiv>
           <div className="form-group row h-20 justify-content-center">
             <div className="col-sm-10">
               <input onClick={this.props.handleOnCreateAccount} className="center btn btn-outline-light" type="submit" name="Sign In" value="Create Account!"></input>

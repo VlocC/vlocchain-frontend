@@ -3,7 +3,8 @@ import {
   Title,
   Logo,
   LoginPageDiv,
-  ErrorBanner
+  ErrorBanner,
+  CenterDiv
 } from './styledComponents.js';
 import SignIn from './SignIn';
 import CreateAccount from './CreateAccount';

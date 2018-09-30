@@ -25,8 +25,8 @@ export const Title = styled.div`
 
 export const Logo = styled.img `
   height: 25%;
-  min-width: 400px;
-  width: 50%;
+  ${'' /* min-width: 400px; */}
+  width: 60%;
 `
 export const Input = styled.input `
   height: 25%;
@@ -39,13 +39,14 @@ export const FormDiv = styled.div`
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 60%;
   max-width: 1200px;
   min-height: 200px;
 `;
 
 export const FieldDiv = styled.div`
   display: flex;
+  flex: 1;
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 100%;
@@ -53,7 +54,6 @@ export const FieldDiv = styled.div`
 
 export const InputField = styled.input`
   display: block;
-  width: 100%;
   padding: .375rem .75rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -63,18 +63,25 @@ export const InputField = styled.input`
   border: 1px solid #ced4da;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  flex: 0 0 41.666667%;
-  max-width: 41.666667%;
+  flex: 0 0 75%;
+  max-width: 75%;
 `;
+
+export const CenterDiv = styled.div`
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+`
 
 export const InputText = styled.div`
   padding-top: calc(.375rem + 1px);
   padding-bottom: calc(.375rem + 1px);
-  padding-left: 20px;
+  ${'' /* padding-left: 20px; */}
   font-size: inherit;
   line-height: 1.5;
   color: white;
-  text-align: center;
+  text-align: left;
 `;
 
 export const Footer = styled.div`
