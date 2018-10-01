@@ -13,10 +13,9 @@ import {
   CreatorDiv,
   CreatorImg
 } from '../videoPage/styledComponents';
+import ThumbnailInput from './ThumbnailInput';
 
 const RANDOM_TEXT = "Click and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuff";
-
-import ThumbnailInput from './ThumbnailInput';
 
 class UploadPage extends Component {
   constructor(props) {
@@ -27,7 +26,8 @@ class UploadPage extends Component {
     }
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.connection = new WebSocket('ws://127.0.0.1:1337');
+    this.connection = new WebSocket('ws://127.0.0.1:1337', 'upload');
+    this.connection.binaryType = "arraybuffer"
     this.connection.onopen = this.handleOnOpen;
     this.connection.onerror = this.handleOnError;
     this.connection.onmessage = this.handleOnMessage;
@@ -46,8 +46,29 @@ class UploadPage extends Component {
 
     fetch(`http://0.0.0.0:9000/videos`, requestOptions)
     .then(res => res.json())
-    .then(response => window.location.replace(window.location.origin + '/videos/' + response.id))
+    .then(response => console.warn(response))
     .catch(error => console.error('Error:', error));
+
+    var file    = this.state.files[0];
+    var reader  = new FileReader();
+    console.warn('after fetch')
+
+    reader.onloadend = this.sendVideoToHolder;
+
+    if (file) {
+      console.warn('About to read file')
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  sendVideoToHolder = ({ target }) => {
+    console.warn(this.connection)
+    try {
+      console.warn('about to send ', target.result);
+      this.connection.send(target.result);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   handleOnInputChange = (event) => {
@@ -72,7 +93,6 @@ class UploadPage extends Component {
   }
 
   render() {
-    console.warn(this.state)
     const timeCreated = new Date();
     return (
       <UploadPageContainer>
