@@ -31,6 +31,9 @@ class UploadPage extends Component {
     this.connection.onopen = this.handleOnOpen;
     this.connection.onerror = this.handleOnError;
     this.connection.onmessage = this.handleOnMessage;
+    this.connection.onclose = (event) => {
+      console.error(event);
+    }
   }
 
   handleConfirmUpload = () => {
@@ -62,13 +65,15 @@ class UploadPage extends Component {
   }
 
   sendVideoToHolder = ({ target }) => {
-    console.warn(this.connection)
-    try {
-      console.warn('about to send ', target.result);
-      this.connection.send(target.result);
-    } catch (e) {
-      console.error(e);
+    console.warn(target)
+    this.connection.send(`START:515270`);
+    const arr = new Int16Array(target.result);
+
+    for(let i = 0; i < arr.length; i += 1024) {
+      const sliceEnd = i + 1024 > arr.length ? arr.length : i + 1024
+      this.connection.send(arr.slice(i, sliceEnd));
     }
+    this.connection.send('END');
   }
 
   handleOnInputChange = (event) => {
