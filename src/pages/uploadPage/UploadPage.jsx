@@ -13,10 +13,9 @@ import {
   CreatorDiv,
   CreatorImg
 } from '../videoPage/styledComponents';
+import ThumbnailInput from './ThumbnailInput';
 
 const RANDOM_TEXT = "Click and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuff";
-
-import ThumbnailInput from './ThumbnailInput';
 
 class UploadPage extends Component {
   constructor(props) {
@@ -27,14 +26,30 @@ class UploadPage extends Component {
     }
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.connection = new WebSocket('ws://127.0.0.1:1337');
+    this.connection = new WebSocket('ws://127.0.0.1:1337', 'upload');
+    this.connection.binaryType = "arraybuffer"
     this.connection.onopen = this.handleOnOpen;
     this.connection.onerror = this.handleOnError;
     this.connection.onmessage = this.handleOnMessage;
+    this.connection.onclose = (event) => {
+      console.error(event);
+    }
   }
 
-  handleConfirmUpload = () => {
-    console.warn('confirmed')
+  handleConfirmUpload = async () => {
+    const videoId = await this.sendInfoToBackend();
+
+    const file    = this.state.files[0];
+    const reader  = new FileReader();
+
+    reader.onloadend = this.sendVideoToHolder.bind(this, videoId);
+
+    if (file) {
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  sendInfoToBackend = () => {
     const {title, description} = this.state;
     const requestOptions = {
       body: `title=${title}&creatorId=random&description=${description}&duration= 1:34&thumbnailUrl=https://cdn.gamerant.com/wp-content/uploads/pokemon-go-eevee-evolve-espeon-umbreon-guide.jpg.optimal.jpg&access_token=${localStorage.getItem('VLOCC_TOKEN')}`,
@@ -44,10 +59,23 @@ class UploadPage extends Component {
       method: "POST"
     };
 
-    fetch(`http://0.0.0.0:9000/videos`, requestOptions)
+    return fetch(`http://0.0.0.0:9000/videos`, requestOptions)
     .then(res => res.json())
-    .then(response => window.location.replace(window.location.origin + '/videos/' + response.id))
+    .then(response => response.id)
     .catch(error => console.error('Error:', error));
+  }
+
+  sendVideoToHolder = (videoId, { target }) => {
+    console.log(this.state);
+    this.connection.send(`START:${target.result.byteLength}`);
+    const arr = new Uint8Array(target.result);
+
+    for(let i = 0; i < arr.length; i += 1024) {
+      const sliceEnd = i + 1024 > arr.length ? arr.length : i + 1024
+      this.connection.send(arr.slice(i, sliceEnd));
+    }
+    const fileType = this.state.files[0].type.split('/')[1];
+    this.connection.send(`END:${videoId}:${fileType}`);
   }
 
   handleOnInputChange = (event) => {
@@ -72,7 +100,6 @@ class UploadPage extends Component {
   }
 
   render() {
-    console.warn(this.state)
     const timeCreated = new Date();
     return (
       <UploadPageContainer>
