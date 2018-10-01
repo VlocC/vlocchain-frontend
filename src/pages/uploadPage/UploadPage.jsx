@@ -66,8 +66,8 @@ class UploadPage extends Component {
 
   sendVideoToHolder = ({ target }) => {
     console.warn(target)
-    this.connection.send(`START:515270`);
-    const arr = new Int16Array(target.result);
+    this.connection.send(`START:${target.result.byteLength}`);
+    const arr = new Uint8Array(target.result);
 
     for(let i = 0; i < arr.length; i += 1024) {
       const sliceEnd = i + 1024 > arr.length ? arr.length : i + 1024
