@@ -18,6 +18,8 @@ class VideoPage extends Component {
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
     this.connection = null;
+    this.myMediaSource = new MediaSource();
+    this.streamUrl = URL.createObjectURL(this.myMediaSource);
   }
 
   componentDidMount() {
@@ -62,7 +64,15 @@ class VideoPage extends Component {
   }
 
   handleOnMessage = (message) => {
+    console.log(this.streamUrl)
     console.log(message.data)
+    const videoSourceBuffer = this.myMediaSource
+    .addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+
+    console.log(videoSourceBuffer)
+
+    videoSourceBuffer.appendBuffer(message.data);
+    console.log(this.myMediaSource)
   }
 
   render() {
@@ -74,7 +84,7 @@ class VideoPage extends Component {
         <ThumbnailDiv>
           <ThumbnailImg src={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`} />
         </ThumbnailDiv>
-        <video src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4'></video>
+        <video autoPlay src={this.streamUrl}></video>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
             <CreatorDiv>
