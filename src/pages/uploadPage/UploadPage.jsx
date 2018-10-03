@@ -37,9 +37,12 @@ class UploadPage extends Component {
   }
 
   handleConfirmUpload = async () => {
-    const videoId = await this.sendInfoToBackend();
-
+    const thumbnailReader  = new FileReader();
+    await this.getThumbnailTempUrl(thumbnailReader);
     const file    = this.state.files[0];
+    console.warn('LENGTH', thumbnailReader.result.length)
+
+    const videoId = await this.sendInfoToBackend(thumbnailReader.result);
     const reader  = new FileReader();
 
     reader.onloadend = this.sendVideoToHolder.bind(this, videoId);
@@ -49,12 +52,32 @@ class UploadPage extends Component {
     }
   }
 
-  sendInfoToBackend = () => {
+  getThumbnailTempUrl = (thumbnailReader) => {
+    const file    = this.state.files[0];
+    return new Promise(resolve => {
+
+      thumbnailReader.onloadend = resolve;
+
+      if (file) {
+        thumbnailReader.readAsBinaryString(file);
+      }
+    })
+  }
+
+  sendInfoToBackend = (thumbnailTempUrl) => {
     const {title, description} = this.state;
+    const body = {
+      title,
+      description,
+      creatorId: "random",
+      duration: "1.34",
+      thumbnailUrl: thumbnailTempUrl,
+      access_token: localStorage.getItem('VLOCC_TOKEN')
+    }
     const requestOptions = {
-      body: `title=${title}&creatorId=random&description=${description}&duration= 1:34&thumbnailUrl=https://cdn.gamerant.com/wp-content/uploads/pokemon-go-eevee-evolve-espeon-umbreon-guide.jpg.optimal.jpg&access_token=${localStorage.getItem('VLOCC_TOKEN')}`,
+      body: JSON.stringify(body),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/json",
       },
       method: "POST"
     };
