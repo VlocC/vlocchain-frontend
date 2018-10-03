@@ -35,7 +35,7 @@ class VideoPage extends Component {
       <PageContainer>
         <Title>{this.state.title}</Title>
         <ThumbnailDiv>
-          <ThumbnailImg src={this.state.thumbnailUrl} />
+          <ThumbnailImg src={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`} />
         </ThumbnailDiv>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
