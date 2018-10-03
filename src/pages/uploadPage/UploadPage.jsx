@@ -117,11 +117,6 @@ class UploadPage extends Component {
     console.warn('Recieved a message: ', message);
   }
 
-  sendMessage = () => {
-    console.log('sent message')
-    this.connection.send('Hi there matie');
-  }
-
   render() {
     const timeCreated = new Date();
     return (

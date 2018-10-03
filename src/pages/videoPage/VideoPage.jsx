@@ -15,17 +15,54 @@ class VideoPage extends Component {
   constructor(props) {
     super(props);
     this.state = {infoLoading: true};
+
+    window.WebSocket = window.WebSocket || window.MozWebSocket;
+    this.connection = null;
   }
 
   componentDidMount() {
     const requestOptions = {
       method: "GET"
     }
+    const id = this.props.match.params.videoId
     console.warn("here");
-    fetch(`http://0.0.0.0:9000/videos/${this.props.match.params.videoId}`, requestOptions)
+    fetch(`http://0.0.0.0:9000/videos/${id}`, requestOptions)
     .then(res => res.json())
-    .then(response => this.setState({...response, infoLoading : false}))
+    .then(response => {
+      this.setupWebSocket('ws://127.0.0.1:1337');
+      //this.getVideoSource(id);
+
+      this.setState({...response, infoLoading : false})
+    })
     .catch(error => console.error('Error:', error));
+  }
+
+  getVideoSource = (id) => {
+    this.connection.send(`START:${id}`);
+  }
+
+  setupWebSocket = (url) => {
+    this.connection = new WebSocket(url, 'stream');
+    this.connection.binaryType = "arraybuffer";
+    this.connection.onopen = this.handleOnOpen;
+    this.connection.onerror = this.handleOnError;
+    this.connection.onmessage = this.handleOnMessage;
+    this.connection.onclose = (event) => {
+      console.error(event);
+    }
+  }
+
+  handleOnOpen = () => {
+    console.warn('Connected!');
+    this.connection.send(`START:${this.props.match.params.videoId}`);
+  }
+
+  handleOnError = (error) => {
+    console.error("There was a connection error");
+  }
+
+  handleOnMessage = (message) => {
+    console.log(message.data)
   }
 
   render() {
@@ -37,6 +74,7 @@ class VideoPage extends Component {
         <ThumbnailDiv>
           <ThumbnailImg src={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`} />
         </ThumbnailDiv>
+        <video src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4'></video>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
             <CreatorDiv>
