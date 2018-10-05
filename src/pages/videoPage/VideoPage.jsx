@@ -67,11 +67,16 @@ class VideoPage extends Component {
     console.log(this.streamUrl)
     console.log(message.data)
     const videoSourceBuffer = this.myMediaSource
-    .addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+    .addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+
+    videoSourceBuffer.addEventListener('updateend', () => {
+      this.myMediaSource.endOfStream();
+      console.log(this.myMediaSource.readyState); // ended
+    });
 
     console.log(videoSourceBuffer)
 
-    videoSourceBuffer.appendBuffer(message.data);
+    videoSourceBuffer.appendBuffer(new Uint8Array(message.data));
     console.log(this.myMediaSource)
   }
 
@@ -84,7 +89,7 @@ class VideoPage extends Component {
         <ThumbnailDiv>
           <ThumbnailImg src={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`} />
         </ThumbnailDiv>
-        <video autoPlay src={this.streamUrl}></video>
+        <video controls src={this.streamUrl}></video>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
             <CreatorDiv>
@@ -103,13 +108,83 @@ class VideoPage extends Component {
 }
 
 export default VideoPage;
-// createdAt: "2018-09-27T06:17:57.368Z"
-// creator: {id: "5bac6a3431041907386e1c72", name: "test", picture: "https://gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0?d=identicon"}
-// creatorId: "random"
-// description: "This is an awesome sample video"
-// duration: "1:34"
-// id: "5bac7615a1b3080dd424ba40"
-// infoLoading: false
-// thumbnailUrl: "https://cdn.gamerant.com/wp-content/uploads/pokemon-go-eevee-evolve-espeon-umbreon-guide.jpg.optimal.jpg"
-// title: "Awesome video"
-// updatedAt: "2018-09-27T06:17:57.368Z"
+
+
+// var FILE = 'test.webm';
+// var NUM_CHUNKS = 5;
+// var video = document.querySelector('video');
+//
+// window.MediaSource = window.MediaSource || window.WebKitMediaSource;
+// if (!!!window.MediaSource) {
+//   alert('MediaSource API is not available');
+// }
+//
+// var mediaSource = new MediaSource();
+//
+// document.querySelector('[data-num-chunks]').textContent = NUM_CHUNKS;
+//
+// video.src = window.URL.createObjectURL(mediaSource);
+//
+// function callback(e) {
+//   var sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+//
+//   logger.log('mediaSource readyState: ' + this.readyState);
+//
+//   GET(FILE, function(uInt8Array) {
+//     var file = new Blob([uInt8Array], {type: 'video/webm'});
+//     var chunkSize = Math.ceil(file.size / NUM_CHUNKS);
+//
+//     logger.log('num chunks:' + NUM_CHUNKS);
+//     logger.log('chunkSize:' + chunkSize + ', totalSize:' + file.size);
+//
+//     // Slice the video into NUM_CHUNKS and append each to the media element.
+//     var i = 0;
+//
+//     (function readChunk_(i) {
+//       var reader = new FileReader();
+//
+//       // Reads aren't guaranteed to finish in the same order they're started in,
+//       // so we need to read + append the next chunk after the previous reader
+//       // is done (onload is fired).
+//       reader.onload = function(e) {
+//         sourceBuffer.appendBuffer(new Uint8Array(e.target.result));
+//         logger.log('appending chunk:' + i);
+//         if (i == NUM_CHUNKS - 1) {
+//           mediaSource.endOfStream();
+//         } else {
+//           if (video.paused) {
+//             video.play(); // Start playing after 1st chunk is appended.
+//           }
+//           readChunk_(++i);
+//         }
+//       };
+//
+//       var startByte = chunkSize * i;
+//       var chunk = file.slice(startByte, startByte + chunkSize);
+//
+//       reader.readAsArrayBuffer(chunk);
+//     })(i);  // Start the recursive call by self calling.
+//   });
+// }
+//
+// mediaSource.addEventListener('sourceopen', callback, false);
+// mediaSource.addEventListener('webkitsourceopen', callback, false);
+//
+// mediaSource.addEventListener('webkitsourceended', function(e) {
+//   logger.log('mediaSource readyState: ' + this.readyState);
+// }, false);
+//
+// function GET(url, callback) {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('GET', url, true);
+//   xhr.responseType = 'arraybuffer';
+//   xhr.send();
+//
+//   xhr.onload = function(e) {
+//     if (xhr.status != 200) {
+//       alert("Unexpected status code " + xhr.status + " for " + url);
+//       return false;
+//     }
+//     callback(new Uint8Array(xhr.response));
+//   };
+// }
