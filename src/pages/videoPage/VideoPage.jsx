@@ -15,17 +15,79 @@ class VideoPage extends Component {
   constructor(props) {
     super(props);
     this.state = {infoLoading: true};
+    window.WebSocket = window.WebSocket || window.MozWebSocket;
+    this.connection = null;
+    this.myMediaSource = null;
+    this.streamUrl = null;
+    console.warn("Is mp4 supported", MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E, mp4a.40.2"'))
   }
 
   componentDidMount() {
     const requestOptions = {
       method: "GET"
     }
+    const id = this.props.match.params.videoId
     console.warn("here");
-    fetch(`http://0.0.0.0:9000/videos/${this.props.match.params.videoId}`, requestOptions)
+    fetch(`http://0.0.0.0:9000/videos/${id}`, requestOptions)
     .then(res => res.json())
-    .then(response => this.setState({...response, infoLoading : false}))
+    .then(response => {
+      this.setupWebSocket('ws://127.0.0.1:1337');
+      //this.getVideoSource(id);
+
+      this.setState({...response})
+    })
     .catch(error => console.error('Error:', error));
+  }
+
+  getVideoSource = (id) => {
+    this.connection.send(`START:${id}`);
+  }
+
+  handleSourceOpen = () => {
+    console.warn('In handle Source Open')
+    this.connection.send(`START:${this.props.match.params.videoId}`);
+  }
+
+  setupWebSocket = (url) => {
+    this.connection = new WebSocket(url, 'stream');
+    this.connection.binaryType = "arraybuffer";
+    this.connection.onopen = this.handleOnOpen;
+    this.connection.onerror = this.handleOnError;
+    this.connection.onmessage = this.handleOnMessage;
+    this.connection.onclose = (event) => {
+      console.error(event);
+    }
+  }
+
+  handleOnOpen = () => {
+    console.warn('Connected!');
+    this.myMediaSource = new MediaSource();
+    console.warn(this.myMediaSource)
+    this.streamUrl = URL.createObjectURL(this.myMediaSource);
+    this.myMediaSource.addEventListener('sourceopen', this.handleSourceOpen);
+    this.setState({infoLoading: false});
+
+  }
+
+  handleOnError = (error) => {
+    console.error("There was a connection error");
+  }
+
+  handleOnMessage = (message) => {
+    console.log(this.streamUrl)
+    console.log(message.data)
+    const videoSourceBuffer = this.myMediaSource
+    .addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+
+    videoSourceBuffer.addEventListener('updateend', () => {
+      this.myMediaSource.endOfStream();
+      console.log(this.myMediaSource.readyState); // ended
+    });
+
+    console.log(videoSourceBuffer)
+
+    videoSourceBuffer.appendBuffer(new Uint8Array(message.data));
+    console.log(this.myMediaSource)
   }
 
   render() {
@@ -37,6 +99,7 @@ class VideoPage extends Component {
         <ThumbnailDiv>
           <ThumbnailImg src={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`} />
         </ThumbnailDiv>
+        <video controls src={this.streamUrl}></video>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
             <Link to={`/creator/${this.state.creator.id}`}>
@@ -57,13 +120,3 @@ class VideoPage extends Component {
 }
 
 export default VideoPage;
-// createdAt: "2018-09-27T06:17:57.368Z"
-// creator: {id: "5bac6a3431041907386e1c72", name: "test", picture: "https://gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0?d=identicon"}
-// creatorId: "random"
-// description: "This is an awesome sample video"
-// duration: "1:34"
-// id: "5bac7615a1b3080dd424ba40"
-// infoLoading: false
-// thumbnailUrl: "https://cdn.gamerant.com/wp-content/uploads/pokemon-go-eevee-evolve-espeon-umbreon-guide.jpg.optimal.jpg"
-// title: "Awesome video"
-// updatedAt: "2018-09-27T06:17:57.368Z"
