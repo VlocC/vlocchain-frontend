@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Dropzone from 'react-dropzone'
+import { Link } from 'react-router-dom';
 import {
   Title,
   PageContainer,
@@ -39,10 +39,12 @@ class VideoPage extends Component {
         </ThumbnailDiv>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
-            <CreatorDiv>
-              <CreatorImg src={this.state.creator.picture} />
-              <h2>{this.state.creator.name}</h2>
-            </CreatorDiv>
+            <Link to={`/creator/${this.state.creator.id}`}>
+              <CreatorDiv>
+                <CreatorImg src={this.state.creator.picture} />
+                <h2>{this.state.creator.name}</h2>
+              </CreatorDiv>
+            </Link>
             <h3>{`${timeCreated.getMonth()} ${timeCreated.getDate()}, ${timeCreated.getFullYear()}`}</h3>
           </CreatorDiv>
           <DescriptionDiv>
