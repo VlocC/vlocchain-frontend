@@ -9,6 +9,7 @@ import {
   BrowseItemTitle
 } from './styledComponents.js';
 
+// TODO get the data from the backend
 const ITEMS = [
   {
     author: 'Owen Sullivan',
@@ -90,6 +91,7 @@ class BrowsePage extends Component {
     }
   }
 
+  // TODO Add an onClick to route them to the corret /video page
   renderVideos() {
     return this.state.items.map((item) => {
       return (

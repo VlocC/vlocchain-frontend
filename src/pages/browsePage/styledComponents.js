@@ -31,10 +31,28 @@ export const BrowseItemThumbnail = styled.div`
   height: 200px;
   width: 300px;
   background-color: red;
+  cursor: pointer;
+  :hover {
+    -webkit-filter: brightness(70%);
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+  }
 `;
 
 export const BrowseItemAuthor = styled.div`
   color: grey;
+  cursor: pointer;
+  :hover {
+    -webkit-filter: brightness(200%);
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+  }
 `;
 
 export const BrowseItemTitle = styled.div`
