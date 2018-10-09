@@ -5,7 +5,8 @@ import {
   BrowsePage,
   UploadPage,
   VideoPage,
-  LoginPage
+  LoginPage,
+  CreatorPage
 } from './pages';
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
         <Route path='/login' component={LoginPage}/>
         <Switch>
           <Route path='/video/:videoId' component={VideoPage}/>
+          <Route path='/creator/:creatorId' component={CreatorPage} />
           <Route path='/upload' component={UploadPage}/>
           <Route exact path='/' component={BrowsePage}/>
         </Switch>

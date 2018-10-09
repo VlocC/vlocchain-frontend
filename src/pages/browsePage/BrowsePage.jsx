@@ -37,7 +37,9 @@ class BrowsePage extends Component {
               <BrowseItemThumbnail style={{backgroundColor: item.color}} />
             </Link>
             <BrowseItemTitle>{item.title}</BrowseItemTitle>
-            <BrowseItemAuthor>{item.creator.name}</BrowseItemAuthor>
+            <Link to={`/creator/${item.creator.id}`}>
+              <BrowseItemAuthor>{item.creator.name}</BrowseItemAuthor>
+            </Link>
           </BrowseItem>
         );
       })
