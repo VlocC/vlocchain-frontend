@@ -4,7 +4,10 @@ import {
   LogoText,
   HeaderContainer,
   ButtonContainer,
-  Button
+  Button,
+  SearchBarIcon,
+  SearchBarInput,
+  SearchBarWrapper
 } from './styledComponents.js';
 
 const activeStyle = {
@@ -20,6 +23,10 @@ class VideoPage extends Component {
     return (
       <HeaderContainer>
         <LogoText>VlocC</LogoText>
+        <SearchBarWrapper>
+          <SearchBarInput />
+          <SearchBarIcon>O</SearchBarIcon>
+        </SearchBarWrapper>
         <ButtonContainer>
           <NavLink to='/' exact activeStyle={activeStyle} style={{height : '100%'}}>
             <Button>

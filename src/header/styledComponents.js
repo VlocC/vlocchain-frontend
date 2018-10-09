@@ -38,3 +38,27 @@ export const Button = styled.button`
     background-color: lightblue;
   }
 `;
+
+export const SearchBarWrapper = styled.div`
+  border: 2px white solid;
+  border-radius: 5px;
+  width: 400px;
+  display: flex;
+  height: 60%
+  align-items: center;
+`;
+
+export const SearchBarInput = styled.input`
+  outline: none;
+  border: none;
+  color: white;
+  width: 90%;
+  background-color: inherit;
+  font-size: 16px;
+`;
+
+// TODO make this a maginifier glass icon
+export const SearchBarIcon = styled.div`
+  color: white;
+  cursor: pointer;
+`;

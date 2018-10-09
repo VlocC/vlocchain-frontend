@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import {
   Title,
   BrowseWrapper,
@@ -9,99 +10,38 @@ import {
   BrowseItemTitle
 } from './styledComponents.js';
 
-// TODO get the data from the backend
-const ITEMS = [
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'red'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'blue'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'green'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'purple'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'yellow'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'navy'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'white'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'red'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'blue'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'green'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'purple'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'yellow'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'navy'
-  },
-  {
-    author: 'Owen Sullivan',
-    title: 'An example',
-    color: 'white'
-  },
-]
-
 class BrowsePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: ITEMS
+      items: null
     }
   }
 
-  // TODO Add an onClick to route them to the corret /video page
+  componentDidMount() {
+    const requestOptions = {
+      method: "GET"
+    }
+    fetch(`http://0.0.0.0:9000/videos`, requestOptions)
+    .then(res => res.json())
+    .then(items => this.setState({items}))
+    .catch(error => console.error('Error:', error));
+  }
+
   renderVideos() {
-    return this.state.items.map((item) => {
-      return (
-        <BrowseItem>
-          <BrowseItemThumbnail style={{backgroundColor: item.color}} />
-          <BrowseItemTitle>{item.title}</BrowseItemTitle>
-          <BrowseItemAuthor>{item.author}</BrowseItemAuthor>
-        </BrowseItem>
-      );
-    })
+    //TODO Add an onclick to go to the creators page
+    return this.state.items ? this.state.items.map((item) => {
+        return (
+          <BrowseItem key={item.id}>
+            <Link to={`/video/${item.id}`}>
+              <BrowseItemThumbnail style={{backgroundColor: item.color}} />
+            </Link>
+            <BrowseItemTitle>{item.title}</BrowseItemTitle>
+            <BrowseItemAuthor>{item.creator.name}</BrowseItemAuthor>
+          </BrowseItem>
+        );
+      })
+    : <div>Sorry no Videos</div>   
   }
 
   render() {
