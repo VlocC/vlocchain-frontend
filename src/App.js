@@ -17,8 +17,8 @@ class App extends Component {
     return (
       <div>
         {window.location.pathname === '/login' ? null : <Header />}
-        <Route path='/login' component={LoginPage}/>
         <Switch>
+          <Route path='/login' component={LoginPage}/>
           <Route path='/video/:videoId' component={VideoPage}/>
           <Route path='/upload' component={UploadPage}/>
           <Route exact path='/' component={BrowsePage}/>
