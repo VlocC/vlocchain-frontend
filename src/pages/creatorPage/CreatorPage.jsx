@@ -27,7 +27,7 @@ class CreatorPage extends Component {
     .then(response => this.setState({...response, infoLoading: false}))
     .catch(error => console.error('Error:', error));
 
-    fetch(`http://0.0.0.0:9000/videos?creator=${this.props.match.params.creatorId}`)
+    fetch(`http://0.0.0.0:9000/videos/creator/${this.props.match.params.creatorId}`)
     .then(res => res.json())
     .then(items => this.setState({items}))
     .catch(error => console.error('Error:', error));
