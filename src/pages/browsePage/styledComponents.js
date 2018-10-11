@@ -27,10 +27,10 @@ export const BrowseItem = styled.div`
   margin: 30px 30px 30px 30px;
 `;
 
-export const BrowseItemThumbnail = styled.div`
+export const BrowseItemThumbnail = styled.img`
   height: 200px;
   width: 300px;
-  background-color: red;
+  background-color: white;
   cursor: pointer;
   :hover {
     -webkit-filter: brightness(70%);

@@ -34,7 +34,7 @@ class BrowsePage extends Component {
         return (
           <BrowseItem key={item.id}>
             <Link to={`/video/${item.id}`}>
-              <BrowseItemThumbnail style={{backgroundColor: item.color}} />
+              <BrowseItemThumbnail src={`https://s3.csh.rit.edu/vlocchain/${item.id}.jpg`} />
             </Link>
             <BrowseItemTitle>{item.title}</BrowseItemTitle>
             <Link to={`/creator/${item.creator.id}`}>

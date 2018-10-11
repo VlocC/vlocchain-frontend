@@ -13,7 +13,7 @@ export const Title = styled.div`
   font-weight: bold;
 `;
 
-export const CreatorPic = styled.div`
+export const CreatorPic = styled.img`
   border-radius: 50%;
   background-color: white;
   height: 300px;
