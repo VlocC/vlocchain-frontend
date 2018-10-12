@@ -10,7 +10,7 @@ export const PageContainer = styled.div`
 export const Title = styled.div`
   font-size: 70px;
   width: auto;
-  color: navy;
+  color: white;
   border: none;
   border-bottom: grey solid 1px;
   outline: none;
@@ -20,7 +20,7 @@ export const Title = styled.div`
 export const DescriptionDiv = styled.div`
   font-size: 18px;
   width: auto;
-  color: navy;
+  color: white;
   outline: none;
   text-align: left;
 `;

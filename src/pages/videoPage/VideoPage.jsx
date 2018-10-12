@@ -11,6 +11,11 @@ import {
   DescriptionDiv
 } from './styledComponents.js';
 
+const VideoPlayerStyles = {
+  width: '100%',
+  height: '100%',
+}
+
 class VideoPage extends Component {
   constructor(props) {
     super(props);
@@ -97,9 +102,14 @@ class VideoPage extends Component {
       <PageContainer>
         <Title>{this.state.title}</Title>
         <ThumbnailDiv>
-          <ThumbnailImg src={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`} />
+          <video 
+            style={VideoPlayerStyles}
+            poster={`https://s3.csh.rit.edu/vlocchain/${this.props.match.params.videoId}.jpg`}
+            controls
+            src={this.streamUrl}
+            autoPlay
+          />
         </ThumbnailDiv>
-        <video controls src={this.streamUrl}></video>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
             <Link to={`/creator/${this.state.creator.id}`}>
@@ -108,7 +118,7 @@ class VideoPage extends Component {
                 <h2>{this.state.creator.name}</h2>
               </CreatorDiv>
             </Link>
-            <h3>{`${timeCreated.getMonth()} ${timeCreated.getDate()}, ${timeCreated.getFullYear()}`}</h3>
+            <h3 style={{color: 'white'}}>{`${timeCreated.getMonth()} ${timeCreated.getDate()}, ${timeCreated.getFullYear()}`}</h3>
           </CreatorDiv>
           <DescriptionDiv>
             {`${this.state.description}`}

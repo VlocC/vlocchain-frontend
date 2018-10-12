@@ -7,11 +7,13 @@ export const HeaderContainer = styled.div`
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  background-color: blue;
+  background-color: white;
+  border-top: 2px solid navy;
+  border-bottom: 2px solid navy;
 `;
 
 export const LogoText = styled.div`
-  color: white;
+  color: navy;
   font-weight: bold;
   font-size: 30px;
   padding: 0 30px;
@@ -30,7 +32,7 @@ export const Button = styled.button`
   border: none;
   outline: none;
   background: ${props => props.isActive ? 'navy' : 'inherit'};
-  color: white;
+  color: navy;
   font-weight: bold;
   font-size: 20px;
   padding: 0 15px;
@@ -40,7 +42,7 @@ export const Button = styled.button`
 `;
 
 export const SearchBarWrapper = styled.div`
-  border: 2px white solid;
+  border: 2px navy solid;
   border-radius: 5px;
   width: 400px;
   display: flex;
@@ -51,7 +53,7 @@ export const SearchBarWrapper = styled.div`
 export const SearchBarInput = styled.input`
   outline: none;
   border: none;
-  color: white;
+  color: navy;
   width: 90%;
   background-color: inherit;
   font-size: 16px;
@@ -59,6 +61,6 @@ export const SearchBarInput = styled.input`
 
 // TODO make this a maginifier glass icon
 export const SearchBarIcon = styled.div`
-  color: white;
+  color: navy;
   cursor: pointer;
 `;

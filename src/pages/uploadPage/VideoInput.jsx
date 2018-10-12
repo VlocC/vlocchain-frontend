@@ -27,7 +27,7 @@ class ThumbnailInput extends Component {
   onDrop(files) {
     this.setState({files})
     this.props.callBackSetState({
-      files
+      videoFile : files[0]
     });
   }
 

@@ -21,7 +21,8 @@ class UploadPage extends Component {
     super(props);
 
     this.state ={
-      files: []
+      thumbnailFile: null,
+      videoFile: null
     }
 
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -38,27 +39,27 @@ class UploadPage extends Component {
   handleConfirmUpload = async () => {
     const thumbnailReader  = new FileReader();
     await this.getThumbnailTempUrl(thumbnailReader);
-    const file    = this.state.files[0];
+    const { videoFile }    = this.state;
     console.warn('LENGTH', thumbnailReader.result.length)
 
     const videoId = await this.sendInfoToBackend(thumbnailReader.result);
-    const reader  = new FileReader();
+    const videoReader  = new FileReader();
 
-    reader.onloadend = this.sendVideoToHolder.bind(this, videoId);
+    videoReader.onloadend = this.sendVideoToHolder.bind(this, videoId);
 
-    if (file) {
-      reader.readAsArrayBuffer(file);
+    if (videoFile) {
+      videoReader.readAsArrayBuffer(videoFile);
     }
   }
 
   getThumbnailTempUrl = (thumbnailReader) => {
-    const file    = this.state.files[0];
+    const {thumbnailFile}    = this.state;
     return new Promise(resolve => {
 
       thumbnailReader.onloadend = resolve;
 
-      if (file) {
-        thumbnailReader.readAsBinaryString(file);
+      if (thumbnailFile) {
+        thumbnailReader.readAsBinaryString(thumbnailFile);
       }
     })
   }
@@ -96,7 +97,7 @@ class UploadPage extends Component {
       const sliceEnd = i + 1024 > arr.length ? arr.length : i + 1024
       this.connection.send(arr.slice(i, sliceEnd));
     }
-    const fileType = this.state.files[0].type.split('/')[1];
+    const fileType = this.state.videoFile.type.split('/')[1];
     this.connection.send(`END:${videoId}:${fileType}`);
   }
 
