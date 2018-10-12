@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import {
   ThumbnailText,
+  VideoDiv
 } from './styledComponents';
 import {
   ThumbnailImg,
@@ -32,15 +33,15 @@ class ThumbnailInput extends Component {
 
   render() {
     return (
-      <ThumbnailDiv>
+      <VideoDiv>
         <Dropzone style={DropzoneStyle} onDrop={this.onDrop.bind(this)}>
           {this.state.files[0] ?
             (
-              <ThumbnailImg src={this.state.files[0].preview} />
-            ) : <ThumbnailText>Click or drag image here</ThumbnailText>
+              <ThumbnailText>We have recieved your video, Click/drag another to replace the previous</ThumbnailText>
+            ) : <ThumbnailText>Click or drag your video here</ThumbnailText>
           }
         </Dropzone>
-      </ThumbnailDiv>
+      </VideoDiv>
     );
   }
 }

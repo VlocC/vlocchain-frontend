@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {
   Title,
   UploadPageContainer,
-  ThumbnailImg,
-  ThumbnailDiv,
   DescriptionDiv,
   ConfirmButton
 } from './styledComponents.js';
@@ -14,6 +12,7 @@ import {
   CreatorImg
 } from '../videoPage/styledComponents';
 import ThumbnailInput from './ThumbnailInput';
+import VideoInput from './VideoInput';
 
 const RANDOM_TEXT = "Click and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuffClick and put your description here! Here is some filler text to make it look like stuff";
 
@@ -123,6 +122,7 @@ class UploadPage extends Component {
       <UploadPageContainer>
         <Title name="title" onChange={this.handleOnInputChange} placeholder="Put your title here"/>
         <ThumbnailInput callBackSetState={this.setState.bind(this)}/>
+        <VideoInput callBackSetState={this.setState.bind(this)}/>
         <SubContainer>
           <CreatorDiv style={{width: '100%'}}>
             <CreatorDiv>

@@ -50,3 +50,11 @@ export const ConfirmButton = styled.button`
   border-radius: 8px;
   padding: 20px 10px;
 `;
+
+export const VideoDiv = styled.div`
+  margin-top: 30px;
+  border: white solid 4px;
+  width: 300px;
+  height: 50px;
+  cursor: pointer;
+`;
