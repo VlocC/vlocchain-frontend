@@ -24,6 +24,7 @@ class VideoPage extends Component {
     this.connection = null;
     this.myMediaSource = null;
     this.streamUrl = null;
+    this.codecs = null;
     console.warn("Is mp4 supported", MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E, mp4a.40.2"'))
   }
 
@@ -80,19 +81,22 @@ class VideoPage extends Component {
 
   handleOnMessage = (message) => {
     console.log(this.streamUrl)
-    console.log(message.data)
-    const videoSourceBuffer = this.myMediaSource
-    .addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+    if (typeof message.data === 'string') {
+      this.codecs = message.data;
+    } else {
+      const videoSourceBuffer = this.myMediaSource
+      .addSourceBuffer(this.codecs);
 
-    videoSourceBuffer.addEventListener('updateend', () => {
-      this.myMediaSource.endOfStream();
-      console.log(this.myMediaSource.readyState); // ended
-    });
+      videoSourceBuffer.addEventListener('updateend', () => {
+        this.myMediaSource.endOfStream();
+        console.log(this.myMediaSource.readyState); // ended
+      });
 
-    console.log(videoSourceBuffer)
+      console.log(videoSourceBuffer)
 
-    videoSourceBuffer.appendBuffer(new Uint8Array(message.data));
-    console.log(this.myMediaSource)
+      videoSourceBuffer.appendBuffer(new Uint8Array(message.data));
+      console.log(this.myMediaSource)
+    }
   }
 
   render() {
