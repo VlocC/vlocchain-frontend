@@ -25,7 +25,6 @@ class VideoPage extends Component {
     this.myMediaSource = null;
     this.streamUrl = null;
     this.codecs = null;
-    console.warn("Is mp4 supported", MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E, mp4a.40.2"'))
   }
 
   componentDidMount() {
@@ -84,6 +83,7 @@ class VideoPage extends Component {
     if (typeof message.data === 'string') {
       this.codecs = message.data;
     } else {
+      console.warn("Is mp4 supported", MediaSource.isTypeSupported(this.codecs))
       const videoSourceBuffer = this.myMediaSource
       .addSourceBuffer(this.codecs);
 
